@@ -39,7 +39,6 @@ def icontrol_get(host, username, password, path):
     except requests.exceptions.RequestException as e:
         abort_script(str(e))
         return
-    print("API RESPONSE: " + apiResponse.text)
     return apiResponse.text
 
 def icontrol_post(host, username, password, path, api_payload):
