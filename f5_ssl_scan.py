@@ -146,6 +146,10 @@ def create_ssl_csv(host, username, password, csvfile, CLIENT_CIPHER_DICT, SERVER
         report_writer = csv.writer(outputcsv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         report_writer.writerow(['VIP NAME','CLIENT SSL PROFILE','PARENT CLIENT SSL PROFILE', 'SERVER SSL PROFILE','PARENT SERVER SSL PROFILE'])
         for current_virtual in LTM_VIRTUAL_LIST:
+            current_client_profile = ''
+            current_client_parent_profile = ''
+            current_server_profile = ''
+            current_server_parent_profile = ''
             if current_virtual['subPath']:
                 api_response = icontrol_get(host, username, password, '/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['subPath'] + '~' + current_virtual['name'] + '/profiles')
             else:
@@ -158,8 +162,8 @@ def create_ssl_csv(host, username, password, csvfile, CLIENT_CIPHER_DICT, SERVER
                     current_client_parent_profile == CLIENT_CIPHER_DICT[current_virtual_profile['name']]['parent']
                 elif current_virtual_profile['context'] == 'serverside' and current_virtual_profile['name'] in SERVER_CIPHER_DICT:
                     current_server_profile == current_virtual_profile['name']
-                    current_server_parent_profile'] == SERVER_CIPHER_DICT[current_virtual_profile['name']]['parent']
-            report_writer.writerow([current_virtual['name'],current_client_profile,current_client_parent_profile,current_server_profile,current_server_parent_profile)
+                    current_server_parent_profile == SERVER_CIPHER_DICT[current_virtual_profile['name']]['parent']
+            report_writer.writerow([current_virtual['name'],current_client_profile,current_client_parent_profile,current_server_profile,current_server_parent_profile])
 
 if __name__ == "__main__":
     BIG_IP = get_args()
