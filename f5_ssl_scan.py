@@ -122,7 +122,7 @@ def create_ssl_report(host, username, password, fullcipherflag, CLIENT_CIPHER_DI
             '************************************************************************************************************************')
         print('Virtual server found: ' + current_virtual['name'])
         api_response = icontrol_get(host, username, password,
-                                    '/ltm/virtual/' + current_virtual['name'] + '/profiles')
+                                    '/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['name'] + '/profiles')
         api_response_dict = json.loads(api_response)
         current_virtual_profiles = api_response_dict['items']
         for current_virtual_profile in current_virtual_profiles:
@@ -145,7 +145,7 @@ def create_ssl_csv(host, username, password, csvfile, CLIENT_CIPHER_DICT, SERVER
         report_writer = csv.writer(outputcsv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         report_writer.writerow(['VIP NAME','CLIENT SSL PROFILE','PARENT CLIENT SSL PROFILE', 'SERVER SSL PROFILE','PARENT SERVER SSL PROFILE'])
         for current_virtual in LTM_VIRTUAL_LIST:
-            api_response = icontrol_get(host, username, password,'/ltm/virtual/' + current_virtual['name'] + '/profiles')
+            api_response = icontrol_get(host, username, password,'/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['name'] + '/profiles')
             api_response_dict = json.loads(api_response)
             current_virtual_profiles = api_response_dict['items']
             for current_virtual_profile in current_virtual_profiles:
