@@ -159,9 +159,11 @@ def create_ssl_csv(host, username, password, csvfile, CLIENT_CIPHER_DICT, SERVER
             current_virtual_profiles = api_response_dict['items']
             for current_virtual_profile in current_virtual_profiles:
                 if current_virtual_profile['context'] == 'clientside' and current_virtual_profile['name'] in CLIENT_CIPHER_DICT:
+                    print("MATCH!")
                     current_client_profile == current_virtual_profile['name']
                     current_client_parent_profile == CLIENT_CIPHER_DICT[current_virtual_profile['name']]['parent']
                 elif current_virtual_profile['context'] == 'serverside' and current_virtual_profile['name'] in SERVER_CIPHER_DICT:
+                    print("MATCH!")
                     current_server_profile == current_virtual_profile['name']
                     current_server_parent_profile == SERVER_CIPHER_DICT[current_virtual_profile['name']]['parent']
             report_writer.writerow([current_virtual['fullPath'],current_client_profile,current_client_parent_profile,current_server_profile,current_server_parent_profile])
