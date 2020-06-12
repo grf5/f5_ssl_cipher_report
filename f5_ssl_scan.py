@@ -123,7 +123,6 @@ def create_ssl_report(host, username, password, fullcipherflag, CLIENT_CIPHER_DI
         else:
             api_response = icontrol_get(host, username, password, '/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['name'] + '/profiles')
         api_response_dict = json.loads(api_response)
-        print(api_response_dict)
         current_virtual_profiles = api_response_dict['items']
         for current_virtual_profile in current_virtual_profiles:
             print(' -> Profile found: ' + current_virtual_profile['name'] + ' (Context: ' + current_virtual_profile['context'] + ')')
