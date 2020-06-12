@@ -56,7 +56,6 @@ def icontrol_post(host, username, password, path, api_payload):
 def retrieve_clientssl_profiles(host, username, password, fullciphers, verbose):
     api_response = icontrol_get(host, username, password, '/ltm/profile/client-ssl')
     api_response_dict = json.loads(api_response)
-    print(api_response)
     clientssl_profile_list = api_response_dict['items']
     CLIENTSSL_PROFILE_CIPHERS = {}
     for current_clientssl_profile in clientssl_profile_list:
@@ -123,7 +122,7 @@ def create_ssl_report(host, username, password, fullcipherflag, CLIENT_CIPHER_DI
         api_response = icontrol_get(host, username, password,
                                     '/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['name'] + '/profiles')
         api_response_dict = json.loads(api_response)
-        print(api_response_dict.text)
+        print(api_response_dict)
         current_virtual_profiles = api_response_dict['items']
         for current_virtual_profile in current_virtual_profiles:
             print(' -> Profile found: ' + current_virtual_profile['name'] + ' (Context: ' + current_virtual_profile['context'] + ')')
