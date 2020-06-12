@@ -114,7 +114,7 @@ def retrieve_virtual_servers(host, username, password, verbose):
             print("Found virtual server " + current_virtual_server['name'])
     return LTM_VIRTUAL_LIST
 
-def create_ssl_report(host, username, password, fullcipherflag, CLIENT_CIPHER_DICT, SERVER_CIPHER_DICT, LTM_VIRTUAL_LIST):
+def create_ssl_report(host, username, password, fullcipherflag, CLIENT_CIPHER_DICT, SERVER_CIPHER_DICT, LTM_VIRTUAL_LIST, verbose):
     for current_virtual in LTM_VIRTUAL_LIST:
         print('*********************')
         print('Virtual server found: ' + current_virtual['fullPath'])
@@ -138,7 +138,8 @@ def create_ssl_report(host, username, password, fullcipherflag, CLIENT_CIPHER_DI
                 if fullcipherflag:
                     print('   -> Complete cipher list: \n' + SERVER_CIPHER_DICT[current_virtual_profile['name']]['cipherlist'])
             else:
-                print('   -> Non-SSL Profile')
+                if verbose:
+                    print('   -> Non-SSL Profile')
 
 def create_ssl_csv(host, username, password, csvfile, CLIENT_CIPHER_DICT, SERVER_CIPHER_DICT, LTM_VIRTUAL_LIST):
     with open(csvfile, mode="w", newline='') as outputcsv:
@@ -162,7 +163,7 @@ if __name__ == "__main__":
     client_ssl_profile_list = retrieve_clientssl_profiles(BIG_IP['host'], BIG_IP['username'], BIG_IP['password'], BIG_IP['fullciphers'], BIG_IP['verbose'])
     server_ssl_profile_list = retrieve_serverssl_profiles(BIG_IP['host'], BIG_IP['username'], BIG_IP['password'], BIG_IP['fullciphers'], BIG_IP['verbose'])
     virtual_server_list = retrieve_virtual_servers(BIG_IP['host'], BIG_IP['username'], BIG_IP['password'], BIG_IP['verbose'])
-    create_ssl_report(BIG_IP['host'], BIG_IP['username'], BIG_IP['password'], BIG_IP['fullciphers'], client_ssl_profile_list,server_ssl_profile_list,virtual_server_list)
+    create_ssl_report(BIG_IP['host'], BIG_IP['username'], BIG_IP['password'], BIG_IP['fullciphers'], client_ssl_profile_list,server_ssl_profile_list,virtual_server_list, BIG_IP['verbose'])
     if BIG_IP['csv']:
         create_ssl_report(BIG_IP['host'], BIG_IP['username'], BIG_IP['password'], BIG_IP['csv'], client_ssl_profile_list, server_ssl_profile_list, virtual_server_list)
     print('\nReport complete.')
