@@ -125,13 +125,14 @@ def create_ssl_report(host, username, password, fullcipherflag, CLIENT_CIPHER_DI
         api_response_dict = json.loads(api_response)
         current_virtual_profiles = api_response_dict['items']
         for current_virtual_profile in current_virtual_profiles:
-            print(' -> Profile found: ' + current_virtual_profile['name'] + ' (Context: ' + current_virtual_profile['context'] + ')')
             if current_virtual_profile['context'] == 'clientside' and current_virtual_profile['name'] in CLIENT_CIPHER_DICT:
+                print(' -> Profile found: ' + current_virtual_profile['name'] + ' (Context: ' + current_virtual_profile['context'] + ')')
                 print('   -> Cipher string: ' + CLIENT_CIPHER_DICT[current_virtual_profile['name']]['cipherstring'])
                 print('   -> Parent profile: ' + CLIENT_CIPHER_DICT[current_virtual_profile['name']]['parent'])
                 if fullcipherflag:
                     print('   -> Complete cipher list: \n' + CLIENT_CIPHER_DICT[current_virtual_profile['name']]['cipherlist'])
             elif current_virtual_profile['context'] == 'serverside' and current_virtual_profile['name'] in SERVER_CIPHER_DICT:
+                print(' -> Profile found: ' + current_virtual_profile['name'] + ' (Context: ' + current_virtual_profile['context'] + ')')
                 print('   -> Cipher string: ' + SERVER_CIPHER_DICT[current_virtual_profile['name']]['cipherstring'])
                 print('   -> Parent profile: ' + SERVER_CIPHER_DICT[current_virtual_profile['name']]['parent'])
                 if fullcipherflag:
