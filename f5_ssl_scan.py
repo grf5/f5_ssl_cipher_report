@@ -155,7 +155,6 @@ def create_ssl_csv(host, username, password, csvfile, CLIENT_CIPHER_DICT, SERVER
             else:
                 api_response = icontrol_get(host, username, password, '/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['name'] + '/profiles')
             api_response_dict = json.loads(api_response)
-            print(api_response_dict)
             current_virtual_profiles = api_response_dict['items']
             for current_virtual_profile in current_virtual_profiles:
                 if current_virtual_profile['context'] == 'clientside' and current_virtual_profile['name'] in CLIENT_CIPHER_DICT:
