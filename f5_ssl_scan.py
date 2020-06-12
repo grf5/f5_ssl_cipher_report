@@ -119,10 +119,11 @@ def create_ssl_report(host, username, password, fullcipherflag, CLIENT_CIPHER_DI
     for current_virtual in LTM_VIRTUAL_LIST:
         print(
             '************************************************************************************************************************')
-        print('Virtual server found: ' + current_virtual['name'])
+        print('Virtual server found: ' + '/' + current_virtual['partition'] + '/' + current_virtual['name'])
         api_response = icontrol_get(host, username, password,
                                     '/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['name'] + '/profiles')
         api_response_dict = json.loads(api_response)
+        print(api_response_dict.text)
         current_virtual_profiles = api_response_dict['items']
         for current_virtual_profile in current_virtual_profiles:
             print(' -> Profile found: ' + current_virtual_profile['name'] + ' (Context: ' + current_virtual_profile['context'] + ')')
