@@ -146,7 +146,10 @@ def create_ssl_csv(host, username, password, csvfile, CLIENT_CIPHER_DICT, SERVER
         report_writer = csv.writer(outputcsv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
         report_writer.writerow(['VIP NAME','CLIENT SSL PROFILE','PARENT CLIENT SSL PROFILE', 'SERVER SSL PROFILE','PARENT SERVER SSL PROFILE'])
         for current_virtual in LTM_VIRTUAL_LIST:
-            api_response = icontrol_get(host, username, password,'/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['name'] + '/profiles')
+            if current_virtual['subPath']:
+                api_response = icontrol_get(host, username, password, '/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['subPath'] + '~' + current_virtual['name'] + '/profiles')
+            else:
+                api_response = icontrol_get(host, username, password, '/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['name'] + '/profiles')
             api_response_dict = json.loads(api_response)
             current_virtual_profiles = api_response_dict['items']
             for current_virtual_profile in current_virtual_profiles:
@@ -165,5 +168,5 @@ if __name__ == "__main__":
     virtual_server_list = retrieve_virtual_servers(BIG_IP['host'], BIG_IP['username'], BIG_IP['password'], BIG_IP['verbose'])
     create_ssl_report(BIG_IP['host'], BIG_IP['username'], BIG_IP['password'], BIG_IP['fullciphers'], client_ssl_profile_list,server_ssl_profile_list,virtual_server_list, BIG_IP['verbose'])
     if BIG_IP['csv']:
-        create_ssl_report(BIG_IP['host'], BIG_IP['username'], BIG_IP['password'], BIG_IP['csv'], client_ssl_profile_list, server_ssl_profile_list, virtual_server_list)
+        create_ssl_csv(BIG_IP['host'], BIG_IP['username'], BIG_IP['password'], BIG_IP['csv'], client_ssl_profile_list, server_ssl_profile_list, virtual_server_list)
     print('\nReport complete.')
