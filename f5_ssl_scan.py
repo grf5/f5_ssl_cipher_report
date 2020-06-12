@@ -144,7 +144,7 @@ def create_ssl_report(host, username, password, fullcipherflag, CLIENT_CIPHER_DI
 def create_ssl_csv(host, username, password, csvfile, CLIENT_CIPHER_DICT, SERVER_CIPHER_DICT, LTM_VIRTUAL_LIST):
     with open(csvfile, mode="w", newline='') as outputcsv:
         report_writer = csv.writer(outputcsv, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-        report_writer.writerow(['VIP NAME','CLIENT SSL PROFILE','PARENT CLIENT SSL PROFILE', 'SERVER SSL PROFILE','PARENT SERVER SSL PROFILE'])
+        report_writer.writerow(['Full Virtual Server Path','CLIENT SSL PROFILE','PARENT CLIENT SSL PROFILE', 'SERVER SSL PROFILE','PARENT SERVER SSL PROFILE'])
         for current_virtual in LTM_VIRTUAL_LIST:
             current_client_profile = 'none'
             current_client_parent_profile = 'none'
