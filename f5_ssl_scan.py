@@ -116,7 +116,7 @@ def retrieve_virtual_servers(host, username, password, verbose):
 
 def create_ssl_report(host, username, password, fullcipherflag, CLIENT_CIPHER_DICT, SERVER_CIPHER_DICT, LTM_VIRTUAL_LIST):
     for current_virtual in LTM_VIRTUAL_LIST:
-        print('************************************************************************************************************************')
+        print('*********************')
         print('Virtual server found: ' + current_virtual['fullPath'])
         if current_virtual['subPath']:
             api_response = icontrol_get(host, username, password, '/ltm/virtual/~' + current_virtual['partition'] + '~' + current_virtual['subPath'] + '~' + current_virtual['name'] + '/profiles')
